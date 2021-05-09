@@ -88,12 +88,12 @@ class SignUp extends Component {
     return (
       <div className={classes.FormWrap}>
         <form className={classes.Form}>
-          <h1>Welcome</h1>
+          <h1> 𝕤ί𝕘ⓝ𝕦ｐ👤</h1>
           <p
             style={{ display: this.state.showNameWarning ? "block" : "none" }}
             className={classes.Warning}
           >
-            name is required
+            𝖓𝖆𝖒𝖊 𝖎𝖘 𝖗𝖊𝖖𝖚𝖎𝖗𝖊𝖉
           </p>
           <div className={nameError}>
             <input
@@ -127,7 +127,7 @@ class SignUp extends Component {
             style={{ display: this.state.showEmailWarning ? "block" : "none" }}
             className={classes.Warning}
           >
-            Enter correct email
+            𝖊𝖓𝖙𝖊𝖗 𝖈𝖔𝖗𝖗𝖊𝖈𝖙 𝖊𝖒𝖆𝖎𝖑
           </p>
           <div className={emailError}>
             <input
@@ -163,8 +163,8 @@ class SignUp extends Component {
             }}
             className={classes.Warning}
           >
-            password should contain minimum of 8 characters,1 uppercase,1
-            lowercase,1 number and 1 special character
+            𝖕𝖆𝖘𝖘𝖜𝖔𝖗𝖉 𝖘𝖍𝖔𝖚𝖑𝖉 𝖈𝖔𝖓𝖙𝖆𝖎𝖓 𝖒𝖎𝖓𝖎𝖒𝖚𝖒 𝖔𝖋 8 𝖈𝖍𝖆𝖗𝖆𝖈𝖙𝖊𝖗𝖘,1
+            𝖚𝖕𝖕𝖊𝖗𝖈𝖆𝖘𝖊,𝖑𝖔𝖜𝖊𝖗𝖈𝖆𝖘𝖊,1 𝖓𝖚𝖒𝖇𝖊𝖗 𝖆𝖓𝖉 1 𝖘𝖕𝖊𝖈𝖎𝖆𝖑 𝖈𝖍𝖆𝖗𝖆𝖈𝖙𝖊𝖗
           </p>
           <div className={passwordError}>
             <input

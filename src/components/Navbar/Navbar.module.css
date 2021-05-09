@@ -1,0 +1,41 @@
+nav {
+  background-color: #fff;
+  padding: 1rem;
+  color: #333;
+  border-bottom: 1px solid rgb(236, 238, 240);
+}
+
+nav div {
+  display: flex;
+  align-items: center;
+}
+nav a h2 {
+  font-weight: 100;
+}
+nav a {
+  flex: 1;
+  font-weight: bold;
+}
+
+nav ul {
+  display: flex;
+  align-items: center;
+}
+nav ul i {
+  padding-right: 1.6rem;
+}
+nav ul img {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+nav a {
+  color: #333;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 280px) {
+  nav a h2 {
+    font-size: 1rem;
+  }
+}

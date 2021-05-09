@@ -1,10 +1,29 @@
-.App {
-  text-align: center;
+.Container {
+  max-width: 60%;
+  margin: auto;
 }
-
+.Main {
+  position: fixed;
+  min-height: 100vh;
+  background: #fbfcfd;
+  min-width: 100vw;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+.active h2,
+.active i {
+  font-weight: bolder;
+  color: rgb(0, 0, 0);
+}
+.active img {
+  padding: 2px;
+  background: rgb(27, 27, 27);
+}
+.container {
+  max-width: 975px;
+  margin: auto;
 }
 
 @media (prefers-reduced-motion: no-preference) {

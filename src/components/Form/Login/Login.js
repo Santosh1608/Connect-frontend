@@ -20,7 +20,7 @@ class Login extends Component {
     return (
       <div className={classes.FormWrap}>
         <form className={classes.Form}>
-          <h1>Welcome</h1>
+          <h1>Ĺ𝕆𝓖ιή 👤</h1>
 
           <div>
             <input
@@ -28,6 +28,7 @@ class Login extends Component {
               type="text"
               placeholder="Email"
               name="email"
+              spellCheck={false}
               value={this.state.email}
             />
           </div>
@@ -37,6 +38,7 @@ class Login extends Component {
               type="password"
               placeholder="Password"
               name="password"
+              spellCheck={false}
               value={this.state.password}
             />
           </div>
