@@ -17,9 +17,13 @@
   font-weight: bolder;
   color: rgb(0, 0, 0);
 }
+.active i {
+  color: red;
+}
 .active img {
   padding: 2px;
-  background: rgb(27, 27, 27);
+  background: #fff;
+  border: 1px solid black;
 }
 .container {
   max-width: 975px;

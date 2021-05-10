@@ -61,10 +61,14 @@
   width: 80%;
   color: #555;
   outline: none;
-  border-bottom: 2px solid rgb(197, 197, 197);
+  border-bottom: 1px solid rgb(197, 197, 197);
   padding-bottom: 0.6rem;
   font-weight: bold;
   transition: all 0.5s;
+}
+.Form input:-webkit-autofill {
+  background-color: transparent !important;
+  -webkit-box-shadow: 0 0 0 50px white inset;
 }
 .Form div input:focus {
   border-bottom: 2px solid #57b846;
@@ -109,6 +113,9 @@
 }
 .Form p {
   color: rgb(185, 185, 185);
+}
+.Form p a {
+  color: #1877f2;
 }
 .Form a {
   text-decoration: none;
