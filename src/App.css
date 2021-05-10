@@ -3,10 +3,8 @@
   margin: auto;
 }
 .Main {
-  position: fixed;
   min-height: 100vh;
   background: #fbfcfd;
-  min-width: 100vw;
 }
 .App-logo {
   height: 40vmin;
