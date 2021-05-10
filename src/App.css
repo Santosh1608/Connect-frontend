@@ -5,6 +5,9 @@
 .Main {
   min-height: 100vh;
   background: #fbfcfd;
+  position: fixed;
+  min-width: 100vw;
+  z-index: -200;
 }
 .App-logo {
   height: 40vmin;

@@ -14,16 +14,15 @@ export class App extends Component {
     const privateRoutes = (
       <div className="App">
         <Navbar />
-        <div className="Main">
-          <div className="container">
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/profile" exact component={UserProfile} />
-              <Route path="/post" exact component={Post} />
-              <Route path="/search" exact component={Search} />
-              <Redirect to="/" />
-            </Switch>
-          </div>
+        <div className="Main"> </div>
+        <div className="container">
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/profile" exact component={UserProfile} />
+            <Route path="/post" exact component={Post} />
+            <Route path="/search" exact component={Search} />
+            <Redirect to="/" />
+          </Switch>
         </div>
       </div>
     );
