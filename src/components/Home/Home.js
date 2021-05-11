@@ -9,10 +9,41 @@ class Home extends Component {
     page: 1,
     hasNextPage: true,
     ITEMS_PER_PAGE: 6,
+    comment: "",
+    commentDisabled: true,
   };
   componentDidMount() {
     this.getData();
   }
+  onChangeHandler = (e) => {
+    if (e.target.value.length > 0) {
+      this.setState({ commentDisabled: false });
+    } else {
+      this.setState({ commentDisabled: true });
+    }
+    this.setState({ comment: e.target.value });
+  };
+  onCommentHandler = async (postId, comment) => {
+    try {
+      const res = await axios.post(
+        `/post/comment/${postId}`,
+        {
+          comment: this.state.comment,
+        },
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      );
+      let Posts = [...this.state.posts];
+      const PostIndex = Posts.findIndex((post) => post._id == postId);
+      Posts[PostIndex].comments = res.data.comments;
+      this.setState({ posts: Posts, comment: "", commentDisabled: true });
+    } catch (e) {
+      console.log(e);
+    }
+  };
   onToggleLikeHandler = async (postId, flag) => {
     try {
       const res = await axios.post(
@@ -97,7 +128,7 @@ class Home extends Component {
                   ></i>
                 )}
                 <i class="far fa-comment"></i>
-                <p>
+                <p className={classes.ViewLikes}>
                   <b>{post.likes.length} </b>
                   {post.likes.length > 1 ? "likes" : "like"}
                 </p>
@@ -107,13 +138,28 @@ class Home extends Component {
                   text of the printing and
                 </p>
                 <p className={classes.ViewComment}>
-                  View all {post.comments.length} comments
+                  {post.comments.length > 0
+                    ? post.comments.length > 1
+                      ? `View ${post.comments.length} comments`
+                      : `View ${post.comments.length} comment`
+                    : "No comments"}
                 </p>
               </div>
 
               <div className={classes.Comment}>
-                <input type="text" placeholder="Add a comment" />
-                <span>Post</span>
+                <input
+                  onChange={this.onChangeHandler}
+                  type="text"
+                  placeholder="Add a comment"
+                  name="comment"
+                  value={this.state.comment}
+                />
+                <button
+                  disabled={this.state.commentDisabled}
+                  onClick={() => this.onCommentHandler(post._id)}
+                >
+                  Post
+                </button>
               </div>
             </div>
           ))}

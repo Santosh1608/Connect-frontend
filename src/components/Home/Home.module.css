@@ -50,9 +50,22 @@
   font-size: 1rem;
   margin-left: 1rem;
 }
-.Comment span {
-  padding: 0 5px;
+.Comment button {
+  padding: 0.5rem;
+  background: #1877f2;
+  color: white;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+}
+.Comment button:disabled {
+  cursor: not-allowed;
+  background-color: #cccccc;
 }
 .cardBottom p {
   margin-bottom: 5px;
+}
+.ViewLikes,
+.ViewComment {
+  cursor: pointer;
 }
