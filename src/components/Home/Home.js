@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { connect } from "react-redux";
 import { Waypoint } from "react-waypoint";
 import classes from "./Home.module.css";
 class Home extends Component {
@@ -12,6 +13,27 @@ class Home extends Component {
   componentDidMount() {
     this.getData();
   }
+  onToggleLikeHandler = async (postId, flag) => {
+    try {
+      const res = await axios.post(
+        `/post/${flag}/${postId}`,
+        {},
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      );
+      let Posts = [...this.state.posts];
+      const PostIndex = Posts.findIndex((post) => post._id == postId);
+      console.log(PostIndex);
+      Posts[PostIndex].likes = res.data.likes;
+      console.log(Posts);
+      this.setState({ posts: Posts });
+    } catch (e) {
+      console.log(e);
+    }
+  };
   getData = async () => {
     if (!this.state.hasNextPage) return;
 
@@ -47,6 +69,7 @@ class Home extends Component {
     }
   };
   render() {
+    console.log("STATE", this.state.posts);
     return (
       <div>
         <div className={classes.Wrapper}>
@@ -62,10 +85,21 @@ class Home extends Component {
                 style={{ width: "100%" }}
               />
               <div className={classes.cardBottom}>
-                <i class="far fa-heart"></i>
+                {post.likes.includes(this.props.user._id.toString()) ? (
+                  <i
+                    onClick={() => this.onToggleLikeHandler(post._id, "unlike")}
+                    class="fas fa-heart"
+                  ></i>
+                ) : (
+                  <i
+                    onClick={() => this.onToggleLikeHandler(post._id, "like")}
+                    class="far fa-heart"
+                  ></i>
+                )}
                 <i class="far fa-comment"></i>
                 <p>
-                  <b>{post.likes.length}</b> likes
+                  <b>{post.likes.length} </b>
+                  {post.likes.length > 1 ? "likes" : "like"}
                 </p>
                 <p>
                   <b>{post.title && post.post_by.name} </b>
@@ -93,5 +127,9 @@ class Home extends Component {
     );
   }
 }
-
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  };
+};
+export default connect(mapStateToProps)(Home);
