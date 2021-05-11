@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import axios from "axios";
+import Loading from "../Loading/Loading";
+import classes from "./Post.module.css";
+
 class Post extends Component {
   state = {
     title: "",
     photo: null,
+    loading: false,
   };
   onChange = (e) => {
-    console.log(e.target.files[0]);
     if (e.target.name == "photo") {
       console.log(e.target.name);
       this.setState({
@@ -20,38 +23,50 @@ class Post extends Component {
   };
   onClick = async (e) => {
     if (this.state.photo) {
-      console.log("Sending");
-      const url = "http://localhost:8080/api/post/60929bbad1dae7f0a6900aa9";
-      const formData = new FormData();
-      formData.append("photo", this.state.photo);
-      formData.append("title", "Nice image");
-      axios({
-        method: "post",
-        url: url,
-        data: formData,
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-        .then(function (response) {
-          //handle success
-          console.log(response.data);
-        })
-        .catch(function (response) {
-          //handle error
-          console.log(response);
+      try {
+        console.log("Sending");
+        const formData = new FormData();
+        formData.append("photo", this.state.photo);
+        formData.append("title", this.state.title);
+        this.setState({ loading: true });
+        await axios({
+          method: "post",
+          url: "/post",
+          data: formData,
+          headers: {
+            "Content-Type": "multipart/form-data",
+            token: localStorage.getItem("token"),
+          },
         });
+        this.setState({ loading: false });
+        this.props.history.replace("/");
+      } catch (e) {
+        console.log(e);
+        this.setState({ loading: false });
+      }
     }
   };
   render() {
-    return (
-      <div>
-        <input type="text" name="title" onChange={this.onChange} />
+    return this.state.loading ? (
+      <Loading />
+    ) : (
+      <div className={classes.Post}>
+        <input
+          type="text"
+          name="title"
+          onChange={this.onChange}
+          placeholder="enter description"
+        />
         <input type="file" name="photo" onChange={this.onChange} />
-        <button type="submit" onClick={this.onClick}>
+        <button
+          disabled={this.state.photo ? false : true}
+          type="submit"
+          onClick={this.onClick}
+        >
           Upload
         </button>
       </div>
     );
   }
 }
-
 export default Post;

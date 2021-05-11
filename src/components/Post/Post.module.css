@@ -1,0 +1,66 @@
+.Post {
+  max-width: 600px;
+  margin: auto;
+  margin-top: 4rem;
+  padding: 5rem;
+  text-align: center;
+  background: rgb(255, 255, 255);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+.Post input {
+  border: none;
+  font-size: 1rem;
+  width: 100%;
+  color: #555;
+  outline: none;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  padding-left: 0;
+  font-weight: 100;
+  background: transparent;
+  border-bottom: 1px solid rgb(201, 201, 201);
+}
+.Post input::-webkit-file-upload-button {
+  padding: 0.7rem;
+  border: none;
+  background: #1877f2;
+  color: white;
+  border-radius: 5px;
+  outline: none;
+}
+.Post button:disabled,
+.Post button:disabled:hover {
+  cursor: not-allowed;
+  background-color: #cccccc;
+  color: #666666;
+  box-shadow: none;
+}
+.Post input::-webkit-file-upload-button:hover {
+  background-color: #3b5998;
+}
+.Post input[type="file"] {
+  padding-bottom: 0;
+}
+.Post button {
+  width: 50%;
+  padding: 0.8rem;
+  border-radius: 25px;
+  border: none;
+  outline: none;
+  background-color: #57b846;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: all 0.5s;
+  box-shadow: 0 1px 3px 0 rgb(87 184 70 / 50%);
+  margin-top: 1rem;
+}
+.Post button:hover {
+  background-color: #1877f2;
+  box-shadow: 0 1px 10px 0 rgb(0 0 150 / 30%);
+}
+@media screen and (max-width: 800px) {
+  .Post {
+    box-shadow: none;
+  }
+}

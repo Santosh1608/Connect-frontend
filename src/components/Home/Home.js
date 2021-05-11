@@ -100,7 +100,6 @@ class Home extends Component {
     }
   };
   render() {
-    console.log("STATE", this.state.posts);
     return (
       <div>
         <div className={classes.Wrapper}>
@@ -166,7 +165,9 @@ class Home extends Component {
         </div>
         {this.state.hasNextPage && (
           <Waypoint onEnter={this.loadMoreData}>
-            <h5 className="text-muted mt-5">Loading data...</h5>
+            <div style={{ textAlign: "center" }}>
+              <i class="fa fa-spinner fa-2x" aria-hidden="true"></i>
+            </div>
           </Waypoint>
         )}
       </div>
@@ -176,6 +177,7 @@ class Home extends Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
+    loading: state.auth.loading,
   };
 };
 export default connect(mapStateToProps)(Home);
