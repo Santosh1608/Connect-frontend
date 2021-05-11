@@ -28,6 +28,24 @@ export const signup = (details) => async (dispatch) => {
     dispatch({ type: "ERROR" });
   }
 };
+export const follow = (userId) => async (dispatch) => {
+  try {
+    dispatch({ type: "LOADING" });
+    const res = await axios.post(
+      `/follow/${userId}`,
+      {},
+      {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      }
+    );
+    dispatch({ type: "FOLLOW", user: res.data.user });
+  } catch (e) {
+    console.log("ERROR OCCURED", e);
+    dispatch({ type: "ERROR" });
+  }
+};
 export const logout = () => {
   return {
     type: "LOGOUT",

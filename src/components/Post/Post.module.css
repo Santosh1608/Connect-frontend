@@ -62,5 +62,12 @@
 @media screen and (max-width: 800px) {
   .Post {
     box-shadow: none;
+    padding: 4rem;
+  }
+}
+@media screen and (max-width: 500px) {
+  .Post {
+    box-shadow: none;
+    padding: 2rem;
   }
 }
