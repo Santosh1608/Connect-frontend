@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Waypoint } from "react-waypoint";
+import classes from "./Home.module.css";
 class Home extends Component {
   state = {
     posts: [],
@@ -48,15 +49,41 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <ul className="list-group list-group-flush">
+        <div className={classes.Wrapper}>
           {this.state.posts.map((post) => (
-            <img
-              style={{ display: "block" }}
-              key={post._id}
-              src={post.photo.url}
-            />
+            <div class={classes.card}>
+              <div className={classes.cardTop}>
+                <img src={post.post_by.avatar.url} />
+                <span>{post.post_by.name}</span>
+              </div>
+              <img
+                src={post.photo.url}
+                alt="Picture"
+                style={{ width: "100%" }}
+              />
+              <div className={classes.cardBottom}>
+                <i class="far fa-heart"></i>
+                <i class="far fa-comment"></i>
+                <p>
+                  <b>{post.likes.length}</b> likes
+                </p>
+                <p>
+                  <b>{post.title && post.post_by.name} </b>
+                  {post.title}What is Lorem Ipsum Lorem Ipsum is simply dummy
+                  text of the printing and
+                </p>
+                <p className={classes.ViewComment}>
+                  View all {post.comments.length} comments
+                </p>
+              </div>
+
+              <div className={classes.Comment}>
+                <input type="text" placeholder="Add a comment" />
+                <span>Post</span>
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
         {this.state.hasNextPage && (
           <Waypoint onEnter={this.loadMoreData}>
             <h5 className="text-muted mt-5">Loading data...</h5>

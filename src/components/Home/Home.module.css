@@ -1,0 +1,58 @@
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  margin: auto;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  word-wrap: break-word;
+}
+.Like {
+  max-width: 30px;
+}
+.Wrapper {
+  padding: 1rem;
+}
+.card p {
+  color: #333;
+}
+.cardTop {
+  padding: 1rem 0;
+  padding-left: 5px;
+  display: flex;
+  align-items: center;
+}
+.cardTop img {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  margin-right: 0.4rem;
+}
+.cardBottom {
+  padding: 1rem;
+  padding-top: 0rem;
+}
+.cardBottom .ViewComment {
+  color: rgba(26, 25, 25, 0.445);
+}
+.cardBottom i {
+  margin: 5px 0;
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+.Comment {
+  padding: 1rem 0;
+  border-top: 1px solid rgb(216, 216, 216);
+}
+.Comment input {
+  width: 80%;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  margin-left: 1rem;
+}
+.Comment span {
+  padding: 0 5px;
+}
+.cardBottom p {
+  margin-bottom: 5px;
+}

@@ -10,7 +10,7 @@ class Navbar extends Component {
       <nav>
         <div className="container">
           <NavLink to="/" exact>
-            <h2>𝐜𝓞𝓃ήⒺℂt💞</h2>
+            <h2>ℂ𝕠𝕟𝕟𝕖𝕔𝕥</h2>
           </NavLink>
           <ul>
             <NavLink exact to="/post">
