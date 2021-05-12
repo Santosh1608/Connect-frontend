@@ -3,7 +3,27 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import classes from "./UserProfile.module.css";
 import * as authActions from "../../actions/auth";
+import axios from "axios";
 class UserProfile extends Component {
+  state = {
+    posts: [],
+    postslength: null,
+  };
+  async componentDidMount() {
+    try {
+      const res = await axios.get(`/user/${this.props.user._id}`, {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      });
+      this.setState({
+        posts: res.data.userPosts,
+        postslength: res.data.postsLength,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
   render() {
     return (
       <div className={classes.User}>
@@ -29,27 +49,34 @@ class UserProfile extends Component {
             </div>
             <div className={classes.UserData}>
               <p>
-                <span>10</span>Posts
+                <span>{this.state.postslength}</span>Posts
               </p>
               <p>
-                <span>100</span>Following
+                <span>{this.props.user.following.length - 1}</span>Following
               </p>
               <p>
-                <span>50</span>Followers
+                <span>{this.props.user.followers.length}</span>Followers
               </p>
             </div>
           </div>
         </div>
         <div className={classes.UserDataMobile}>
           <p>
-            <span>10</span>Posts
+            <span>{this.state.posts.length}</span>Posts
           </p>
           <p>
-            <span>100</span>Following
+            <span>{this.props.user.following.length}</span>Following
           </p>
           <p>
-            <span>50</span>Followers
+            <span>{this.props.user.followers.length}</span>Followers
           </p>
+        </div>
+        <div className={classes.UserPosts}>
+          {this.state.posts.map((post) => (
+            <div key={post._id}>
+              <img src={post.photo.url} />
+            </div>
+          ))}
         </div>
       </div>
     );

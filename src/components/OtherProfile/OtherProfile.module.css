@@ -24,13 +24,22 @@
 }
 .UserProfile .Icons div {
   margin-right: 1rem;
-  cursor: pointer;
 }
 .UserProfile .Icons i {
   margin-right: 5px;
 }
 .UserProfile .Icons div span {
   display: inline-block;
+  padding: 0.6rem;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.UserProfile .Icons div span.Follow {
+  background: steelblue;
+}
+.UserProfile .Icons div span.UnFollow {
+  background: red;
 }
 .UserProfile {
   border-bottom: 1px solid rgb(207, 207, 207);
@@ -81,9 +90,6 @@
   }
 }
 @media screen and (max-width: 650px) {
-  .UserProfile .Icons div span {
-    display: none;
-  }
   .UserProfile .Left {
     flex: 6;
   }

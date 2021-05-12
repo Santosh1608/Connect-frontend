@@ -40,7 +40,14 @@ class Search extends Component {
           {this.state.users.map((user) => {
             return this.props.user._id.toString() == user._id ? null : (
               <div className={classes.User}>
-                <div>
+                <div
+                  onClick={() =>
+                    this.props.history.push({
+                      pathname: `/profile/${user._id}`,
+                      user: user,
+                    })
+                  }
+                >
                   <img src={user.avatar.url} />
                   <p>{user.name[0].toUpperCase() + user.name.slice(1)}</p>
                 </div>

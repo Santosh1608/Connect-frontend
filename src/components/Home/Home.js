@@ -105,7 +105,19 @@ class Home extends Component {
         <div className={classes.Wrapper}>
           {this.state.posts.map((post) => (
             <div class={classes.card}>
-              <div className={classes.cardTop}>
+              <div
+                onClick={() =>
+                  post.post_by._id == this.props.user._id
+                    ? this.props.history.push({
+                        pathname: `/profile`,
+                      })
+                    : this.props.history.push({
+                        pathname: `/profile/${post.post_by._id}`,
+                        user: post.post_by,
+                      })
+                }
+                className={classes.cardTop}
+              >
                 <img src={post.post_by.avatar.url} />
                 <span>{post.post_by.name}</span>
               </div>

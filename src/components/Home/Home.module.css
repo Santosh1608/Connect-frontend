@@ -21,6 +21,7 @@
   padding-left: 5px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 .cardTop img {
   width: 25px;

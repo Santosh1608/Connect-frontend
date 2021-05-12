@@ -46,6 +46,26 @@ export const follow = (userId) => async (dispatch) => {
     dispatch({ type: "ERROR" });
   }
 };
+export const unfollow = (userId) => async (dispatch) => {
+  try {
+    dispatch({ type: "LOADING" });
+    const res = await axios.post(
+      `/unfollow/${userId}`,
+      {},
+      {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      }
+    );
+    console.log("--------------------------------------------------------");
+    console.log(res.data);
+    dispatch({ type: "UNFOLLOW", user: res.data.user });
+  } catch (e) {
+    console.log("ERROR OCCURED", e);
+    dispatch({ type: "ERROR" });
+  }
+};
 export const logout = () => {
   return {
     type: "LOGOUT",
