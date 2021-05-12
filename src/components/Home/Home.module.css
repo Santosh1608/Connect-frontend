@@ -71,3 +71,9 @@
 .ViewComment {
   cursor: pointer;
 }
+
+@media screen and (max-width: 480px) {
+  .Wrapper {
+    padding-top: 0;
+  }
+}

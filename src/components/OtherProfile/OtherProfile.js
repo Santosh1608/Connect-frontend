@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import classes from "./OtherProfile.module.css";
 import * as authActions from "../../actions/auth";
 import { Redirect } from "react-router-dom";
+import Model from "../../components/Model/Model";
+import People from "../../components/People/People";
 import axios from "axios";
 class OtherProfile extends Component {
   state = {
@@ -47,8 +49,8 @@ class OtherProfile extends Component {
   };
   async componentDidMount() {
     try {
-      if (this.state.user) {
-        const res = await axios.get(`/user/${this.state.user._id}`, {
+      if (this.props.location.user) {
+        const res = await axios.get(`/user/${this.props.location.user._id}`, {
           headers: {
             token: localStorage.getItem("token"),
           },
@@ -63,9 +65,35 @@ class OtherProfile extends Component {
       console.log(e);
     }
   }
+  async componentDidUpdate() {
+    if (this.props.location.user) {
+      try {
+        if (this.state.user) {
+          const res = await axios.get(`/user/${this.props.location.user._id}`, {
+            headers: {
+              token: localStorage.getItem("token"),
+            },
+          });
+          this.setState({
+            posts: res.data.userPosts,
+            postslength: res.data.postsLength,
+            user: res.data.user,
+          });
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    this.props.location.user = null;
+  }
   render() {
+    console.log(this.props.model, "MODEL");
     return !this.state.user ? (
       <Redirect to="/" />
+    ) : this.props.model ? (
+      <Model>
+        <People userId={this.state.user._id} people={this.props.people} />
+      </Model>
     ) : (
       <div className={classes.User}>
         {" "}
@@ -100,12 +128,27 @@ class OtherProfile extends Component {
               <p>
                 <span>{this.state.postslength}</span>Posts
               </p>
-              <p>
-                <span>{this.state.user.following.length - 1}</span>Following
-              </p>
-              <p>
-                <span>{this.state.user.followers.length}</span>Followers
-              </p>
+              {this.props.user.following.includes(
+                this.state.user._id.toString()
+              ) ? (
+                <>
+                  <p onClick={() => this.props.modelOpen("following")}>
+                    <span>{this.state.user.following.length - 1}</span>Following
+                  </p>
+                  <p onClick={() => this.props.modelOpen("followers")}>
+                    <span>{this.state.user.followers.length}</span>Followers
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p>
+                    <span>{this.state.user.following.length - 1}</span>Following
+                  </p>
+                  <p>
+                    <span>{this.state.user.followers.length}</span>Followers
+                  </p>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -113,12 +156,27 @@ class OtherProfile extends Component {
           <p>
             <span>{this.state.posts.length}</span>Posts
           </p>
-          <p>
-            <span>{this.state.user.following.length}</span>Following
-          </p>
-          <p>
-            <span>{this.state.user.followers.length}</span>Followers
-          </p>
+          {this.props.user.following.includes(
+            this.state.user._id.toString()
+          ) ? (
+            <>
+              <p onClick={() => this.props.modelOpen("following")}>
+                <span>{this.state.user.following.length - 1}</span>Following
+              </p>
+              <p onClick={() => this.props.modelOpen("followers")}>
+                <span>{this.state.user.followers.length}</span>Followers
+              </p>
+            </>
+          ) : (
+            <>
+              <p>
+                <span>{this.state.user.following.length - 1}</span>Following
+              </p>
+              <p>
+                <span>{this.state.user.followers.length}</span>Followers
+              </p>
+            </>
+          )}
         </div>
         {this.props.user.following.includes(this.state.user._id.toString()) ? (
           <div className={classes.UserPosts}>
@@ -139,12 +197,15 @@ class OtherProfile extends Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
+    people: state.model.people,
+    model: state.model.model,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     follow: (userId) => dispatch(authActions.follow(userId)),
     unfollow: (userId) => dispatch(authActions.unfollow(userId)),
+    modelOpen: (people) => dispatch({ type: "MODEL_OPEN", people }),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(OtherProfile);

@@ -39,11 +39,21 @@
   display: flex;
   margin-top: 1rem;
 }
+.UserProfile .UserData .Followers,
+.Following {
+  background: steelblue;
+  padding: 5px;
+  color: white;
+}
 .UserProfile .UserData p {
   margin-right: 1rem;
+  background: steelblue;
+  padding: 5px;
+  color: white;
 }
 .UserData span {
   margin-right: 5px;
+  font-weight: bold;
 }
 .UserDataMobile {
   display: none;
