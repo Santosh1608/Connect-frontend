@@ -36,7 +36,15 @@ nav a {
   color: #333;
   text-decoration: none;
 }
-
+.Logo img {
+  max-width: 35px;
+  max-height: 35px;
+  border: none;
+  margin-left: 10px;
+}
+.Logo {
+  display: flex;
+}
 @media screen and (max-width: 280px) {
   nav a h2 {
     font-size: 1rem;

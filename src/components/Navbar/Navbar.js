@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import classes from "./Navbar.module.css";
+import logo from "../../assets/Coonect1.svg";
 import * as authActions from "../../actions/auth";
 class Navbar extends Component {
   render() {
@@ -10,7 +11,9 @@ class Navbar extends Component {
       <nav>
         <div className="container">
           <NavLink to="/" exact>
-            <h2>ℂ𝕠𝕟𝕟𝕖𝕔𝕥</h2>
+            <h2 className={classes.Logo}>
+              𝒞𝑜𝓃𝓃𝑒𝒸𝓉 <img src={logo} alt="👤" />
+            </h2>
           </NavLink>
           <ul>
             <NavLink exact to="/post">

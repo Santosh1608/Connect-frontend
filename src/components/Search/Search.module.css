@@ -15,6 +15,7 @@
   display: flex;
   align-items: center;
   padding: 1rem 0;
+  cursor: pointer;
 }
 .User div:first-child {
   display: flex;
@@ -25,7 +26,7 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  margin-right: 5px;
+  margin-right: 10px;
 }
 .User button {
   padding: 0.5rem;

@@ -13,18 +13,18 @@
   height: 40vmin;
   pointer-events: none;
 }
-.active h2,
-.active i {
+.active h2 {
+  color: rgba(156, 15, 15, 0.884);
   font-weight: bolder;
-  color: rgb(0, 0, 0);
 }
 .active i {
-  color: red;
+  color: rgba(156, 15, 15, 0.884);
+  font-weight: bolder;
 }
 .active img {
   padding: 2px;
   background: #fff;
-  border: 1px solid black;
+  border: 1px solid rgba(53, 1, 1, 0.884);
 }
 .container {
   max-width: 975px;

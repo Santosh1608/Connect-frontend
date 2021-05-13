@@ -132,10 +132,16 @@ class OtherProfile extends Component {
                 this.state.user._id.toString()
               ) ? (
                 <>
-                  <p onClick={() => this.props.modelOpen("following")}>
+                  <p
+                    style={{ cursor: "pointer" }}
+                    onClick={() => this.props.modelOpen("following")}
+                  >
                     <span>{this.state.user.following.length - 1}</span>Following
                   </p>
-                  <p onClick={() => this.props.modelOpen("followers")}>
+                  <p
+                    style={{ cursor: "pointer" }}
+                    onClick={() => this.props.modelOpen("followers")}
+                  >
                     <span>{this.state.user.followers.length}</span>Followers
                   </p>
                 </>
@@ -187,7 +193,7 @@ class OtherProfile extends Component {
             ))}
           </div>
         ) : (
-          <h1>Follow to View Posts</h1>
+          <h1 className={classes.Show}>Follow to View Posts</h1>
         )}
       </div>
     );

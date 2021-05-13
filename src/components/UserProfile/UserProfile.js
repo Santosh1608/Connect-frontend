@@ -6,6 +6,7 @@ import * as authActions from "../../actions/auth";
 import Model from "../../components/Model/Model";
 import People from "../../components/People/People";
 import axios from "axios";
+import user_edit from "../../assets/edit_user.svg";
 class UserProfile extends Component {
   state = {
     posts: [],
@@ -40,16 +41,16 @@ class UserProfile extends Component {
           <div className={classes.Right}>
             <h1>{this.props.user.name}</h1>
             <div className={classes.Icons}>
-              <div>
-                <i class="fas fa-edit"></i>
+              <div className={classes.Icon}>
+                <img className={classes.Edit_Icon} src={user_edit} />
                 <span className={classes.Edit}>Edit</span>
               </div>
-              <div>
+              {/* <div>
                 <i class="far fa-trash-alt"></i>
                 <span className={classes.Delete}>Delete Account</span>
-              </div>
-              <div>
-                <i onClick={this.props.logout} class="fas fa-sign-out-alt"></i>
+              </div> */}
+              <div className={classes.Icon} onClick={this.props.logout}>
+                <i class="fas fa-sign-out-alt"></i>
                 <span className={classes.Logout}>Logout</span>
               </div>
             </div>

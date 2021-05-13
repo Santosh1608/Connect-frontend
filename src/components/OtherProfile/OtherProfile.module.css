@@ -36,10 +36,10 @@
   cursor: pointer;
 }
 .UserProfile .Icons div span.Follow {
-  background: steelblue;
+  background: rgb(143, 173, 109);
 }
 .UserProfile .Icons div span.UnFollow {
-  background: red;
+  background: rgba(250, 111, 111, 0.918);
 }
 .UserProfile {
   border-bottom: 1px solid rgb(207, 207, 207);
@@ -50,6 +50,15 @@
 }
 .UserProfile .UserData p {
   margin-right: 1rem;
+  background: rgb(124, 216, 219);
+  padding: 5px;
+  font-weight: bold;
+  color: white;
+}
+.UserProfile .UserData p:first-child {
+  background: none;
+  color: black;
+  padding: 5px;
 }
 .UserData span {
   margin-right: 5px;
@@ -64,6 +73,11 @@
 .UserPosts div img {
   width: 100%;
   height: 100%;
+}
+.Show {
+  color: rgb(73, 73, 73);
+  text-align: center;
+  margin-top: 2rem;
 }
 
 @media screen and (max-width: 800px) {
@@ -114,5 +128,8 @@
   }
   .UserProfile .Icons i {
     font-size: 1rem;
+  }
+  .UserProfile h1 {
+    font-size: 1.4rem;
   }
 }
