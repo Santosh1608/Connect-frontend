@@ -9,26 +9,34 @@ class Home extends Component {
     page: 1,
     hasNextPage: true,
     ITEMS_PER_PAGE: 6,
-    comment: "",
-    commentDisabled: true,
   };
   componentDidMount() {
     this.getData();
   }
-  onChangeHandler = (e) => {
+  onChangeHandler = (e, id) => {
+    let postIndex, post;
+    let posts = [...this.state.posts];
+    postIndex = this.state.posts.findIndex((post) => post._id == id);
+    post = posts[postIndex];
     if (e.target.value.length > 0) {
+      post.commentDisabled = false;
       this.setState({ commentDisabled: false });
     } else {
+      post.commentDisabled = true;
       this.setState({ commentDisabled: true });
     }
-    this.setState({ comment: e.target.value });
+    post.commentValue = e.target.value;
+    posts[postIndex] = post;
+
+    this.setState({ posts: posts });
   };
-  onCommentHandler = async (postId, comment) => {
+  onCommentHandler = async (postId) => {
+    let post = this.state.posts.find((post) => post._id == postId);
     try {
       const res = await axios.post(
         `/post/comment/${postId}`,
         {
-          comment: this.state.comment,
+          comment: post.commentValue,
         },
         {
           headers: {
@@ -39,6 +47,8 @@ class Home extends Component {
       let Posts = [...this.state.posts];
       const PostIndex = Posts.findIndex((post) => post._id == postId);
       Posts[PostIndex].comments = res.data.comments;
+      Posts[PostIndex].commentValue = "";
+      Posts[PostIndex].commentDisabled = true;
       this.setState({ posts: Posts, comment: "", commentDisabled: true });
     } catch (e) {
       console.log(e);
@@ -80,7 +90,13 @@ class Home extends Component {
           if (total === this.state.posts.length + docs.length) {
             this.setState({ hasNextPage: false });
           }
+          console.log("---------POSTS-----------");
           console.log(docs);
+          docs = docs.map((post) => {
+            post.commentValue = "";
+            post.commentDisabled = true;
+            return post;
+          });
 
           this.setState((preState) => {
             return {
@@ -159,14 +175,14 @@ class Home extends Component {
 
               <div className={classes.Comment}>
                 <input
-                  onChange={this.onChangeHandler}
+                  onChange={(e) => this.onChangeHandler(e, post._id)}
                   type="text"
                   placeholder="Add a comment"
                   name="comment"
-                  value={this.state.comment}
+                  value={post.commentValue}
                 />
                 <button
-                  disabled={this.state.commentDisabled}
+                  disabled={post.commentDisabled}
                   onClick={() => this.onCommentHandler(post._id)}
                 >
                   Post

@@ -4,7 +4,7 @@
 }
 .Main {
   min-height: 100vh;
-  background: #fbfcfd;
+  background: #f6f7f8;
   position: fixed;
   min-width: 100vw;
   z-index: -200;
