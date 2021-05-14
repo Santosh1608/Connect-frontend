@@ -66,6 +66,28 @@ export const unfollow = (userId) => async (dispatch) => {
     dispatch({ type: "ERROR" });
   }
 };
+export const updateUser = (email, name, history) => async (dispatch) => {
+  dispatch({ type: "LOADING" });
+  try {
+    const user = await axios.put(
+      `/update/user`,
+      {
+        email,
+        name,
+      },
+      {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      }
+    );
+    dispatch({ type: "UPDATE_USER", user: user.data });
+    history.goBack();
+  } catch (e) {
+    console.log(e);
+    dispatch({ type: "ERROR" });
+  }
+};
 export const logout = () => {
   return {
     type: "LOGOUT",

@@ -21,6 +21,7 @@ const authReducer = (state = initialState, action) => {
       };
     case "FOLLOW":
     case "UNFOLLOW":
+    case "UPDATE_USER":
       localStorage.setItem("user", JSON.stringify(action.user));
       console.log(action.user);
       return { ...state, user: action.user };

@@ -10,6 +10,7 @@ import UserProfile from "./components/UserProfile/UserProfile";
 import Post from "./components/Post/Post";
 import Search from "./components/Search/Search";
 import OtherProfile from "./components/OtherProfile/OtherProfile";
+import Edit from "./components/Edit/Edit";
 export class App extends Component {
   render() {
     const privateRoutes = (
@@ -20,6 +21,7 @@ export class App extends Component {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/profile" exact component={UserProfile} />
+            <Route path="/profile/edit" exact component={Edit} />
             <Route path="/profile/:id" exact component={OtherProfile} />
             <Route path="/post" exact component={Post} />
             <Route path="/search" exact component={Search} />

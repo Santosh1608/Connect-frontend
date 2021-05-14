@@ -41,14 +41,13 @@ class UserProfile extends Component {
           <div className={classes.Right}>
             <h1>{this.props.user.name}</h1>
             <div className={classes.Icons}>
-              <div className={classes.Icon}>
+              <div
+                onClick={() => this.props.history.push("/profile/edit")}
+                className={classes.Icon}
+              >
                 <img className={classes.Edit_Icon} src={user_edit} />
                 <span className={classes.Edit}>Edit</span>
               </div>
-              {/* <div>
-                <i class="far fa-trash-alt"></i>
-                <span className={classes.Delete}>Delete Account</span>
-              </div> */}
               <div className={classes.Icon} onClick={this.props.logout}>
                 <i class="fas fa-sign-out-alt"></i>
                 <span className={classes.Logout}>Logout</span>
