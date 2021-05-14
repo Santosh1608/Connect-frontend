@@ -28,6 +28,7 @@ class UserProfile extends Component {
     }
   }
   render() {
+    console.log("LENGTH", this.state.postslength);
     return this.props.model ? (
       <Model>
         <People userId={this.props.user._id} people={this.props.people} />
@@ -76,7 +77,7 @@ class UserProfile extends Component {
         </div>
         <div className={classes.UserDataMobile}>
           <p>
-            <span>{this.state.posts.length}</span>Posts
+            <span>{this.state.postslength}</span>Posts
           </p>
           <p onClick={() => this.props.modelOpen("following")}>
             <span>{this.props.user.following.length}</span>Following

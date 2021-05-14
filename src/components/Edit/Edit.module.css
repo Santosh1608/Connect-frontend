@@ -34,8 +34,9 @@
   border-bottom: 1px solid #ccc;
   outline: none;
 }
-.Wrap button {
-  padding: 0.7rem;
+.Wrap button,
+label {
+  padding: 0.5rem;
   color: white;
   background: tomato;
   border: none;
@@ -43,9 +44,17 @@
   margin-top: 1rem;
   outline: none;
 }
-.Wrap button:hover {
+.Wrap button:hover,
+label:hover {
   background-color: #1877f2;
   box-shadow: 0 1px 10px 0 rgb(0 0 150 / 30%);
+}
+input[type="file"] {
+  color: transparent;
+}
+label {
+  display: inline-block;
+  margin-top: 1rem;
 }
 .Wrap button:disabled,
 .Wrap button:disabled:hover {
@@ -55,7 +64,7 @@
   box-shadow: none;
 }
 .Wrap input:focus {
-  border-bottom: 1px solid tomato;
+  border-bottom: 1px solid rgb(71, 187, 255);
 }
 @media screen and (max-width: 800px) {
   .Left img {

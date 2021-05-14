@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import * as authActions from "../../actions/auth";
 import { connect } from "react-redux";
 import classes from "./Edit.module.css";
+import Compressor from "compressorjs";
 class Edit extends Component {
   state = {
     email: this.props.user.email,
@@ -40,13 +41,35 @@ class Edit extends Component {
     }
     this.setState({ [e.target.name]: e.target.value });
   };
+  onChange = (e) => {
+    console.log("CHANGED");
+    const image = e.target.files[0];
+    console.log(image);
+    if (image) {
+      new Compressor(image, {
+        quality: 0.5, // 0.6 can also be used, but its not recommended to go below.
+        success: (compressedResult) => {
+          // compressedResult has the compressed file.
+          // Use the compressed file to upload the images to your server.
+          this.props.updateUserProfile(compressedResult, this.props.history);
+        },
+      });
+    }
+  };
   render() {
     return (
       <div className={classes.Wrap}>
         <div className={classes.Left}>
           <img src={this.props.user.avatar.url} />
           <div>
-            <button>Update Pic</button>
+            <label for="img">Update Pic</label>
+            <input
+              id="img"
+              style={{ display: "none" }}
+              type="file"
+              name="photo"
+              onChange={this.onChange}
+            />
           </div>
         </div>
         <div className={classes.Right}>
@@ -81,6 +104,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateUser: (email, name, history) =>
       dispatch(authActions.updateUser(email, name, history)),
+    updateUserProfile: (photo, history) =>
+      dispatch(authActions.updateUserProfile(photo, history)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Edit);

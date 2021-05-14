@@ -160,7 +160,7 @@ class OtherProfile extends Component {
         </div>
         <div className={classes.UserDataMobile}>
           <p>
-            <span>{this.state.posts.length}</span>Posts
+            <span>{this.state.postslength}</span>Posts
           </p>
           {this.props.user.following.includes(
             this.state.user._id.toString()

@@ -88,6 +88,26 @@ export const updateUser = (email, name, history) => async (dispatch) => {
     dispatch({ type: "ERROR" });
   }
 };
+export const updateUserProfile = (photo, history) => async (dispatch) => {
+  try {
+    console.log("UPDATEPROFILE ACTIONS");
+    dispatch({ type: "LOADING" });
+    const formData = new FormData();
+    if (photo) {
+      formData.append("photo", photo);
+    }
+    const user = await axios.put(`/updateProfile/user`, formData, {
+      headers: {
+        token: localStorage.getItem("token"),
+      },
+    });
+    dispatch({ type: "UPDATE_PIC", user: user.data });
+    history.goBack();
+  } catch (e) {
+    console.log(e);
+    dispatch({ type: "ERROR" });
+  }
+};
 export const logout = () => {
   return {
     type: "LOGOUT",
