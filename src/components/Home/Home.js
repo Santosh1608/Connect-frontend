@@ -3,6 +3,8 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { Waypoint } from "react-waypoint";
 import classes from "./Home.module.css";
+import Model from "../Model/Model";
+import PostMore from "../PostMore/PostMore";
 class Home extends Component {
   state = {
     posts: [],
@@ -10,8 +12,16 @@ class Home extends Component {
     hasNextPage: true,
     ITEMS_PER_PAGE: 6,
   };
+  show = "";
   componentDidMount() {
     this.getData();
+  }
+  componentDidUpdate(preProps, preState) {
+    console.log(preProps.model, this.props.model);
+    if (preProps.model == true && this.props.model == false) {
+      console.log("HIT");
+      this.getData(true);
+    }
   }
   onChangeHandler = (e, id) => {
     let postIndex, post;
@@ -75,10 +85,17 @@ class Home extends Component {
       console.log(e);
     }
   };
-  getData = async () => {
+  showMore = (show, postId) => {
+    this.show = <PostMore show={show} postId={postId} />;
+    this.props.modelOpen();
+  };
+  getData = async (initial) => {
     if (!this.state.hasNextPage) return;
 
-    const searchPostURL = `/posts?page=${this.state.page}&limit=${this.state.ITEMS_PER_PAGE}`;
+    let searchPostURL = `/posts?page=${this.state.page}&limit=${this.state.ITEMS_PER_PAGE}`;
+    if (initial) {
+      searchPostURL = `/posts?page=${1}&limit=${this.state.ITEMS_PER_PAGE}`;
+    }
     axios
       .get(searchPostURL, {
         headers: {
@@ -87,8 +104,11 @@ class Home extends Component {
       })
       .then(({ data: { docs, total } }) => {
         if (docs) {
-          if (total === this.state.posts.length + docs.length) {
+          if (total === this.state.posts.length + docs.length && !initial) {
             this.setState({ hasNextPage: false });
+          }
+          if (initial) {
+            this.setState({ hasNextPage: true });
           }
           console.log("---------POSTS-----------");
           console.log(docs);
@@ -98,12 +118,21 @@ class Home extends Component {
             return post;
           });
 
-          this.setState((preState) => {
-            return {
-              posts: [...preState.posts, ...docs],
-              page: preState.page + 1,
-            };
-          });
+          if (!initial) {
+            this.setState((preState) => {
+              return {
+                posts: [...preState.posts, ...docs],
+                page: preState.page + 1,
+              };
+            });
+          } else {
+            this.setState((preState) => {
+              return {
+                posts: [...docs],
+                page: 2,
+              };
+            });
+          }
         }
       })
       .catch((e) => {
@@ -116,7 +145,10 @@ class Home extends Component {
     }
   };
   render() {
-    return (
+    console.log(this.show);
+    return this.props.model ? (
+      <Model>{this.show}</Model>
+    ) : (
       <div>
         <div className={classes.Wrapper}>
           {this.state.posts.map((post) => (
@@ -155,7 +187,10 @@ class Home extends Component {
                   ></i>
                 )}
                 <i class="far fa-comment"></i>
-                <p className={classes.ViewLikes}>
+                <p
+                  onClick={() => this.showMore("likes", post._id)}
+                  className={classes.ViewLikes}
+                >
                   <b>{post.likes.length} </b>
                   {post.likes.length > 1 ? "likes" : "like"}
                 </p>
@@ -164,7 +199,10 @@ class Home extends Component {
                   {post.title}What is Lorem Ipsum Lorem Ipsum is simply dummy
                   text of the printing and
                 </p>
-                <p className={classes.ViewComment}>
+                <p
+                  onClick={() => this.showMore("comments", post._id)}
+                  className={classes.ViewComment}
+                >
                   {post.comments.length > 0
                     ? post.comments.length > 1
                       ? `View ${post.comments.length} comments`
@@ -206,6 +244,12 @@ const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
     loading: state.auth.loading,
+    model: state.model.model,
   };
 };
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    modelOpen: (people) => dispatch({ type: "MODEL_OPEN", people }),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
