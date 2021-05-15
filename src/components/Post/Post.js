@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import Loading from "../Loading/Loading";
 import classes from "./Post.module.css";
+import { connect } from "react-redux";
 import Compressor from "compressorjs";
 class Post extends Component {
   state = {
@@ -15,7 +16,10 @@ class Post extends Component {
       console.log(e.target.name);
       const image = e.target.files[0];
       new Compressor(image, {
-        quality: 0.5, // 0.6 can also be used, but its not recommended to go below.
+        quality: 0.8,
+        maxWidth: 800,
+        maxHeight: 1000,
+        // 0.6 can also be used, but its not recommended to go below.
         success: (compressedResult) => {
           // compressedResult has the compressed file.
           // Use the compressed file to upload the images to your server.
@@ -49,10 +53,15 @@ class Post extends Component {
           },
         });
         this.setState({ loading: false });
+        this.props.addSuccess();
+        setTimeout(() => {
+          this.props.removeSuccess();
+        }, 3000);
         this.props.history.replace("/");
       } catch (e) {
         console.log(e);
         this.setState({ loading: false });
+        this.props.error(e.response.data);
       }
     }
   };
@@ -79,4 +88,17 @@ class Post extends Component {
     );
   }
 }
-export default Post;
+const mapStateToProps = (state) => {
+  return {
+    success: state.auth.successMsg,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addSuccess: () =>
+      dispatch({ type: "SUCCESS", success: "Post added Successfully" }),
+    removeSuccess: () => dispatch({ type: "REMOVE_SUCCESS" }),
+    error: (err) => dispatch({ type: "ERROR", error: err }),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Post);

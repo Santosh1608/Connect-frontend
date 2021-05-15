@@ -11,10 +11,21 @@ import Post from "./components/Post/Post";
 import Search from "./components/Search/Search";
 import OtherProfile from "./components/OtherProfile/OtherProfile";
 import Edit from "./components/Edit/Edit";
+import Message from "./components/Message/Message";
 export class App extends Component {
   render() {
+    let msg = null;
+    if (this.props.error) {
+      msg = <Message message={{ type: "error", value: this.props.errorMsg }} />;
+    } else if (this.props.success) {
+      msg = (
+        <Message message={{ type: "success", value: this.props.success }} />
+      );
+    }
+    console.log(this.props.user);
     const privateRoutes = (
       <div className="App">
+        {msg}
         <Navbar />
         <div className="Main"> </div>
         <div className="container">
@@ -31,11 +42,14 @@ export class App extends Component {
       </div>
     );
     const publicRoutes = (
-      <Switch>
-        <Route path="/login" exact component={Login} />
-        <Route path="/signup" exact component={SignUp} />
-        <Redirect to="/login" />
-      </Switch>
+      <>
+        {msg}
+        <Switch>
+          <Route path="/login" exact component={Login} />
+          <Route path="/signup" exact component={SignUp} />
+          <Redirect to="/login" />
+        </Switch>
+      </>
     );
     const routes = this.props.token ? privateRoutes : publicRoutes;
 
@@ -46,6 +60,9 @@ const mapStateToProps = (state) => {
   return {
     token: state.auth.token,
     user: state.auth.user,
+    error: state.auth.error,
+    errorMsg: state.auth.errorMsg,
+    success: state.auth.successMsg,
   };
 };
 

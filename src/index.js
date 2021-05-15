@@ -19,6 +19,7 @@ const store = createStore(
   composeEnhancers(applyMiddleware(thunk))
 );
 axios.defaults.baseURL = "http://localhost:8080/api";
+
 ReactDOM.render(
   <Provider store={store}>
     <Router>

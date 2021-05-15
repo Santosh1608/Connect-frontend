@@ -11,10 +11,12 @@ class OtherProfile extends Component {
   state = {
     posts: [],
     postslength: 0,
+    firstVisit: false,
     user: this.props.location.user,
   };
   onFollowHandler = async (following_id) => {
     await this.props.follow(following_id);
+    this.setState({ firstVisit: false });
     try {
       const res = await axios.get(`/user/${this.state.user._id}`, {
         headers: {
@@ -25,6 +27,7 @@ class OtherProfile extends Component {
         posts: res.data.userPosts,
         postslength: res.data.postsLength,
         user: res.data.user,
+        firstVisit: true,
       });
     } catch (e) {
       console.log(e);
@@ -59,6 +62,7 @@ class OtherProfile extends Component {
           posts: res.data.userPosts,
           postslength: res.data.postsLength,
           user: res.data.user,
+          firstVisit: true,
         });
       }
     } catch (e) {
@@ -185,13 +189,17 @@ class OtherProfile extends Component {
           )}
         </div>
         {this.props.user.following.includes(this.state.user._id.toString()) ? (
-          <div className={classes.UserPosts}>
-            {this.state.posts.map((post) => (
-              <div key={post._id}>
-                <img src={post.photo.url} />
-              </div>
-            ))}
-          </div>
+          this.state.posts.length == 0 && this.state.firstVisit ? (
+            <h1 className="Info">No posts associated with this account</h1>
+          ) : (
+            <div className={classes.UserPosts}>
+              {this.state.posts.map((post) => (
+                <div key={post._id}>
+                  <img src={post.photo.url} />
+                </div>
+              ))}
+            </div>
+          )
         ) : (
           <h1 className={classes.Show}>Follow to View Posts</h1>
         )}

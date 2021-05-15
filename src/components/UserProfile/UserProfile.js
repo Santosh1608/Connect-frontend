@@ -11,6 +11,7 @@ class UserProfile extends Component {
   state = {
     posts: [],
     postslength: null,
+    firstVisit: false,
   };
   async componentDidMount() {
     try {
@@ -22,6 +23,7 @@ class UserProfile extends Component {
       this.setState({
         posts: res.data.userPosts,
         postslength: res.data.postsLength,
+        firstVisit: true,
       });
     } catch (e) {
       console.log(e);
@@ -86,13 +88,17 @@ class UserProfile extends Component {
             <span>{this.props.user.followers.length}</span>Followers
           </p>
         </div>
-        <div className={classes.UserPosts}>
-          {this.state.posts.map((post) => (
-            <div key={post._id}>
-              <img src={post.photo.url} />
-            </div>
-          ))}
-        </div>
+        {this.state.posts.length == 0 && this.state.firstVisit ? (
+          <h1 className="Info">U have no posts to view</h1>
+        ) : (
+          <div className={classes.UserPosts}>
+            {this.state.posts.map((post) => (
+              <div key={post._id}>
+                <img src={post.photo.url} />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     );
   }

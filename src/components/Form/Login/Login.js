@@ -3,6 +3,8 @@ import classes from "../Form.module.css";
 import * as authActions from "../../../actions/auth";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import Loading from "../../Loading/Loading";
+import Message from "../../Message/Message";
 class Login extends Component {
   state = {
     email: "",
@@ -17,42 +19,49 @@ class Login extends Component {
     this.props.login(this.state);
   };
   render() {
-    return (
-      <div className={classes.FormWrap}>
-        <form className={classes.Form}>
-          <h1>Ĺ𝕆𝓖ιή 👤</h1>
+    return this.props.loading ? (
+      <Loading />
+    ) : (
+      <>
+        <div className={classes.FormWrap}>
+          <form className={classes.Form}>
+            <h1>Ĺ𝕆𝓖ιή 👤</h1>
 
-          <div>
-            <input
-              onChange={this.onChangeHandler}
-              type="text"
-              placeholder="Email"
-              name="email"
-              spellCheck={false}
-              value={this.state.email}
-            />
-          </div>
-          <div>
-            <input
-              onChange={this.onChangeHandler}
-              type="password"
-              placeholder="Password"
-              name="password"
-              spellCheck={false}
-              value={this.state.password}
-            />
-          </div>
+            <div>
+              <input
+                onChange={this.onChangeHandler}
+                type="text"
+                placeholder="Email"
+                name="email"
+                spellCheck={false}
+                value={this.state.email}
+              />
+            </div>
+            <div>
+              <input
+                onChange={this.onChangeHandler}
+                type="password"
+                placeholder="Password"
+                name="password"
+                spellCheck={false}
+                value={this.state.password}
+              />
+            </div>
 
-          <div>
-            <button disabled={this.state.disable} onClick={this.onClickHandler}>
-              LOGIN
-            </button>
-          </div>
-          <p>
-            Don't have account? <Link to="/signup">SignUp</Link>
-          </p>
-        </form>
-      </div>
+            <div>
+              <button
+                disabled={this.state.disable}
+                onClick={this.onClickHandler}
+              >
+                LOGIN
+              </button>
+            </div>
+            <p>
+              Don't have account? <Link to="/signup">SignUp</Link>
+            </p>
+          </form>
+        </div>
+      </>
     );
   }
   componentDidUpdate(preProps, preState) {
@@ -71,10 +80,15 @@ class Login extends Component {
     }
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    loading: state.auth.loading,
+  };
+};
 const mapDispatchToProps = (dispatch) => {
   return {
     login: (details) => dispatch(authActions.login(details)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

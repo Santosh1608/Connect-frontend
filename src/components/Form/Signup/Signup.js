@@ -3,6 +3,9 @@ import classes from "../Form.module.css";
 import * as authActions from "../../../actions/auth";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import Compressor from "compressorjs";
+import Loading from "../../Loading/Loading";
+import Message from "../../Message/Message";
 class SignUp extends Component {
   state = {
     name: "",
@@ -15,6 +18,7 @@ class SignUp extends Component {
     passwordError: true,
     passwordChecked: false,
     photo: null,
+    compressedPhoto: null,
     disable: true,
     showNameWarning: false,
     showEmailWarning: false,
@@ -27,9 +31,18 @@ class SignUp extends Component {
   };
   onChangeHandler = (e) => {
     if (e.target.name == "photo") {
-      console.log(e.target.name);
-      this.setState({
-        [e.target.name]: e.target.files[0],
+      new Compressor(e.target.files[0], {
+        quality: 0.6,
+        maxWidth: 260,
+        maxHeight: 260, // 0.6 can also be used, but its not recommended to go below.
+        success: (compressedResult) => {
+          // compressedResult has the compressed file.
+          // Use the compressed file to upload the images to your server.
+          this.setState({
+            compressedPhoto: compressedResult,
+            photo: e.target.files[0],
+          });
+        },
       });
     } else {
       let error = true;
@@ -85,128 +98,138 @@ class SignUp extends Component {
     if (this.state.passwordError && this.state.passwordChecked) {
       var passwordError = classes.passwordError;
     }
-    return (
-      <div className={classes.FormWrap}>
-        <form className={classes.Form}>
-          <h1> 𝕤ί𝕘ⓝ𝕦ｐ👤</h1>
-          <p
-            style={{ display: this.state.showNameWarning ? "block" : "none" }}
-            className={classes.Warning}
-          >
-            𝖓𝖆𝖒𝖊 𝖎𝖘 𝖗𝖊𝖖𝖚𝖎𝖗𝖊𝖉
-          </p>
-          <div className={nameError}>
-            <input
-              onChange={this.onChangeHandler}
-              type="text"
-              placeholder="Username"
-              name="name"
-              spellCheck={false}
-              value={this.state.name}
-            />
-            <span
-              style={{
-                fontSize: "1.3rem",
-                color: "red",
-                display: this.state.nameChecked ? "inline" : "none",
-              }}
+
+    return this.props.loading ? (
+      <Loading />
+    ) : (
+      <>
+        <div className={classes.FormWrap}>
+          <form className={classes.Form}>
+            <h1> 𝕤ί𝕘ⓝ𝕦ｐ👤</h1>
+            <p
+              style={{ display: this.state.showNameWarning ? "block" : "none" }}
+              className={classes.Warning}
             >
-              {this.state.nameError ? (
-                <i
-                  onClick={(e) =>
-                    this.toggleWarningHandler(e, "showNameWarning")
-                  }
-                  class="fas fa-exclamation-circle"
-                ></i>
-              ) : (
-                <i style={{ color: "green" }} class="fas fa-check-circle"></i>
-              )}
-            </span>
-          </div>
-          <p
-            style={{ display: this.state.showEmailWarning ? "block" : "none" }}
-            className={classes.Warning}
-          >
-            𝖊𝖓𝖙𝖊𝖗 𝖈𝖔𝖗𝖗𝖊𝖈𝖙 𝖊𝖒𝖆𝖎𝖑
-          </p>
-          <div className={emailError}>
-            <input
-              onChange={this.onChangeHandler}
-              type="text"
-              placeholder="Email"
-              name="email"
-              spellCheck={false}
-              value={this.state.email}
-            />
-            <span
+              𝖓𝖆𝖒𝖊 𝖎𝖘 𝖗𝖊𝖖𝖚𝖎𝖗𝖊𝖉
+            </p>
+            <div className={nameError}>
+              <input
+                onChange={this.onChangeHandler}
+                type="text"
+                placeholder="Username"
+                name="name"
+                spellCheck={false}
+                value={this.state.name}
+              />
+              <span
+                style={{
+                  fontSize: "1.3rem",
+                  color: "red",
+                  display: this.state.nameChecked ? "inline" : "none",
+                }}
+              >
+                {this.state.nameError ? (
+                  <i
+                    onClick={(e) =>
+                      this.toggleWarningHandler(e, "showNameWarning")
+                    }
+                    class="fas fa-exclamation-circle"
+                  ></i>
+                ) : (
+                  <i style={{ color: "green" }} class="fas fa-check-circle"></i>
+                )}
+              </span>
+            </div>
+            <p
               style={{
-                fontSize: "1.3rem",
-                color: "red",
-                display: this.state.emailChecked ? "inline" : "none",
+                display: this.state.showEmailWarning ? "block" : "none",
               }}
+              className={classes.Warning}
             >
-              {this.state.emailError ? (
-                <i
-                  onClick={(e) =>
-                    this.toggleWarningHandler(e, "showEmailWarning")
-                  }
-                  class="fas fa-exclamation-circle"
-                ></i>
-              ) : (
-                <i style={{ color: "green" }} class="fas fa-check-circle"></i>
-              )}
-            </span>
-          </div>
-          <p
-            style={{
-              display: this.state.showPasswordWarning ? "block" : "none",
-            }}
-            className={classes.Warning}
-          >
-            𝖕𝖆𝖘𝖘𝖜𝖔𝖗𝖉 𝖘𝖍𝖔𝖚𝖑𝖉 𝖈𝖔𝖓𝖙𝖆𝖎𝖓 𝖒𝖎𝖓𝖎𝖒𝖚𝖒 𝖔𝖋 8 𝖈𝖍𝖆𝖗𝖆𝖈𝖙𝖊𝖗𝖘,1
-            𝖚𝖕𝖕𝖊𝖗𝖈𝖆𝖘𝖊,𝖑𝖔𝖜𝖊𝖗𝖈𝖆𝖘𝖊,1 𝖓𝖚𝖒𝖇𝖊𝖗 𝖆𝖓𝖉 1 𝖘𝖕𝖊𝖈𝖎𝖆𝖑 𝖈𝖍𝖆𝖗𝖆𝖈𝖙𝖊𝖗
-          </p>
-          <div className={passwordError}>
-            <input
-              onChange={this.onChangeHandler}
-              type="password"
-              placeholder="Password"
-              name="password"
-              spellCheck={false}
-              value={this.state.password}
-            />
-            <span
+              𝖊𝖓𝖙𝖊𝖗 𝖈𝖔𝖗𝖗𝖊𝖈𝖙 𝖊𝖒𝖆𝖎𝖑
+            </p>
+            <div className={emailError}>
+              <input
+                onChange={this.onChangeHandler}
+                type="text"
+                placeholder="Email"
+                name="email"
+                spellCheck={false}
+                value={this.state.email}
+              />
+              <span
+                style={{
+                  fontSize: "1.3rem",
+                  color: "red",
+                  display: this.state.emailChecked ? "inline" : "none",
+                }}
+              >
+                {this.state.emailError ? (
+                  <i
+                    onClick={(e) =>
+                      this.toggleWarningHandler(e, "showEmailWarning")
+                    }
+                    class="fas fa-exclamation-circle"
+                  ></i>
+                ) : (
+                  <i style={{ color: "green" }} class="fas fa-check-circle"></i>
+                )}
+              </span>
+            </div>
+            <p
               style={{
-                fontSize: "1.3rem",
-                color: "red",
-                display: this.state.passwordChecked ? "inline" : "none",
+                display: this.state.showPasswordWarning ? "block" : "none",
               }}
+              className={classes.Warning}
             >
-              {this.state.passwordError ? (
-                <i
-                  onClick={(e) =>
-                    this.toggleWarningHandler(e, "showPasswordWarning")
-                  }
-                  class="fas fa-exclamation-circle"
-                ></i>
-              ) : (
-                <i style={{ color: "green" }} class="fas fa-check-circle"></i>
-              )}
-            </span>
-          </div>
-          <div>
-            <input onChange={this.onChangeHandler} type="file" name="photo" />
-          </div>
-          <div>
-            <button disabled={this.state.disable} onClick={this.onClickHandler}>
-              SignUp
-            </button>
-          </div>
-          <p>
-            Already have an account? <Link to="/login">Login</Link>
-          </p>
-        </form>
-      </div>
+              𝖕𝖆𝖘𝖘𝖜𝖔𝖗𝖉 𝖘𝖍𝖔𝖚𝖑𝖉 𝖈𝖔𝖓𝖙𝖆𝖎𝖓 𝖒𝖎𝖓𝖎𝖒𝖚𝖒 𝖔𝖋 8 𝖈𝖍𝖆𝖗𝖆𝖈𝖙𝖊𝖗𝖘,1
+              𝖚𝖕𝖕𝖊𝖗𝖈𝖆𝖘𝖊,𝖑𝖔𝖜𝖊𝖗𝖈𝖆𝖘𝖊,1 𝖓𝖚𝖒𝖇𝖊𝖗 𝖆𝖓𝖉 1 𝖘𝖕𝖊𝖈𝖎𝖆𝖑 𝖈𝖍𝖆𝖗𝖆𝖈𝖙𝖊𝖗
+            </p>
+            <div className={passwordError}>
+              <input
+                onChange={this.onChangeHandler}
+                type="password"
+                placeholder="Password"
+                name="password"
+                spellCheck={false}
+                value={this.state.password}
+              />
+              <span
+                style={{
+                  fontSize: "1.3rem",
+                  color: "red",
+                  display: this.state.passwordChecked ? "inline" : "none",
+                }}
+              >
+                {this.state.passwordError ? (
+                  <i
+                    onClick={(e) =>
+                      this.toggleWarningHandler(e, "showPasswordWarning")
+                    }
+                    class="fas fa-exclamation-circle"
+                  ></i>
+                ) : (
+                  <i style={{ color: "green" }} class="fas fa-check-circle"></i>
+                )}
+              </span>
+            </div>
+            <div>
+              <input onChange={this.onChangeHandler} type="file" name="photo" />
+            </div>
+            <div>
+              <button
+                disabled={this.state.disable}
+                onClick={this.onClickHandler}
+              >
+                SignUp
+              </button>
+            </div>
+            <p>
+              Already have an account? <Link to="/login">Login</Link>
+            </p>
+          </form>
+        </div>
+      </>
     );
   }
   componentDidUpdate(preProps, preState) {
@@ -244,10 +267,15 @@ class SignUp extends Component {
     }
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    loading: state.auth.loading,
+  };
+};
 const mapDispatchToProps = (dispatch) => {
   return {
     signup: (details) => dispatch(authActions.signup(details)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

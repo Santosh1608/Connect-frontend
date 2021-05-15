@@ -3,6 +3,7 @@ import * as authActions from "../../actions/auth";
 import { connect } from "react-redux";
 import classes from "./Edit.module.css";
 import Compressor from "compressorjs";
+import Loading from "../Loading/Loading";
 class Edit extends Component {
   state = {
     email: this.props.user.email,
@@ -47,7 +48,9 @@ class Edit extends Component {
     console.log(image);
     if (image) {
       new Compressor(image, {
-        quality: 0.5, // 0.6 can also be used, but its not recommended to go below.
+        quality: 0.6,
+        maxWidth: 260,
+        maxHeight: 260, // 0.6 can also be used, but its not recommended to go below.
         success: (compressedResult) => {
           // compressedResult has the compressed file.
           // Use the compressed file to upload the images to your server.
@@ -57,7 +60,9 @@ class Edit extends Component {
     }
   };
   render() {
-    return (
+    return this.props.loading ? (
+      <Loading />
+    ) : (
       <div className={classes.Wrap}>
         <div className={classes.Left}>
           <img src={this.props.user.avatar.url} />
@@ -98,6 +103,7 @@ class Edit extends Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
+    loading: state.auth.loading,
   };
 };
 const mapDispatchToProps = (dispatch) => {

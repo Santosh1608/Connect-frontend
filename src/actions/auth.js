@@ -4,28 +4,51 @@ export const login = (details) => async (dispatch) => {
     dispatch({ type: "LOADING" });
     const res = await axios.post("/signin", details);
     console.log(res.data);
-    dispatch({ type: "LOGIN", token: res.data.token, user: res.data.user });
+    dispatch({
+      type: "LOGIN",
+      token: res.data.token,
+      user: res.data.user,
+      success: "Successfully Logged In",
+    });
+    setTimeout(() => {
+      dispatch({ type: "REMOVE_SUCCESS" });
+    }, 3000);
   } catch (e) {
+    console.log(e.response.data);
     console.log("ERROR OCCURED", e);
-    dispatch({ type: "ERROR" });
+    dispatch({ type: "ERROR", error: e.response.data });
+    setTimeout(() => {
+      dispatch({ type: "REMOVE_ERROR" });
+    }, 3000);
   }
 };
 export const signup = (details) => async (dispatch) => {
   try {
     dispatch({ type: "LOADING" });
     const formData = new FormData();
-    if (details.photo) {
-      formData.append("photo", details.photo);
+    if (details.compressedPhoto) {
+      formData.append("photo", details.compressedPhoto);
     }
     formData.append("name", details.name);
     formData.append("email", details.email);
     formData.append("password", details.password);
     const res = await axios.post("/signup", formData);
     console.log(res.data);
-    dispatch({ type: "SIGNUP", token: res.data.token, user: res.data.user });
+    dispatch({
+      type: "SIGNUP",
+      token: res.data.token,
+      user: res.data.user,
+      success: "Successfully Signed Up",
+    });
+    setTimeout(() => {
+      dispatch({ type: "REMOVE_SUCCESS" });
+    }, 3000);
   } catch (e) {
-    console.log("ERROR OCCURED", e);
-    dispatch({ type: "ERROR" });
+    console.log("ERROR OCCURED", e.response);
+    dispatch({ type: "ERROR", error: e.response.data });
+    setTimeout(() => {
+      dispatch({ type: "REMOVE_ERROR" });
+    }, 3000);
   }
 };
 export const follow = (userId) => async (dispatch) => {
@@ -43,7 +66,10 @@ export const follow = (userId) => async (dispatch) => {
     dispatch({ type: "FOLLOW", user: res.data.user });
   } catch (e) {
     console.log("ERROR OCCURED", e);
-    dispatch({ type: "ERROR" });
+    dispatch({ type: "ERROR", error: e.response.data });
+    setTimeout(() => {
+      dispatch({ type: "REMOVE_ERROR" });
+    }, 3000);
   }
 };
 export const unfollow = (userId) => async (dispatch) => {
@@ -63,7 +89,10 @@ export const unfollow = (userId) => async (dispatch) => {
     dispatch({ type: "UNFOLLOW", user: res.data.user });
   } catch (e) {
     console.log("ERROR OCCURED", e);
-    dispatch({ type: "ERROR" });
+    dispatch({ type: "ERROR", error: e.response.data });
+    setTimeout(() => {
+      dispatch({ type: "REMOVE_ERROR" });
+    }, 3000);
   }
 };
 export const updateUser = (email, name, history) => async (dispatch) => {
@@ -81,11 +110,21 @@ export const updateUser = (email, name, history) => async (dispatch) => {
         },
       }
     );
-    dispatch({ type: "UPDATE_USER", user: user.data });
+    dispatch({
+      type: "UPDATE_USER",
+      user: user.data,
+      success: "User Updated Successfully",
+    });
+    setTimeout(() => {
+      dispatch({ type: "REMOVE_SUCCESS" });
+    }, 3000);
     history.goBack();
   } catch (e) {
     console.log(e);
-    dispatch({ type: "ERROR" });
+    dispatch({ type: "ERROR", error: e.response.data });
+    setTimeout(() => {
+      dispatch({ type: "REMOVE_ERROR" });
+    }, 3000);
   }
 };
 export const updateUserProfile = (photo, history) => async (dispatch) => {
@@ -101,15 +140,29 @@ export const updateUserProfile = (photo, history) => async (dispatch) => {
         token: localStorage.getItem("token"),
       },
     });
-    dispatch({ type: "UPDATE_PIC", user: user.data });
+    dispatch({
+      type: "UPDATE_PIC",
+      user: user.data,
+      success: "Profile Pic Updated successfully",
+    });
+    setTimeout(() => {
+      dispatch({ type: "REMOVE_SUCCESS" });
+    }, 3000);
     history.goBack();
   } catch (e) {
     console.log(e);
-    dispatch({ type: "ERROR" });
+    dispatch({ type: "ERROR", error: e.response.data });
+    setTimeout(() => {
+      dispatch({ type: "REMOVE_ERROR" });
+    }, 3000);
   }
 };
-export const logout = () => {
-  return {
+export const logout = () => (dispatch) => {
+  dispatch({
     type: "LOGOUT",
-  };
+    success: "Logged Out successfully",
+  });
+  setTimeout(() => {
+    dispatch({ type: "REMOVE_SUCCESS" });
+  }, 3000);
 };

@@ -11,6 +11,7 @@ class Home extends Component {
     page: 1,
     hasNextPage: true,
     ITEMS_PER_PAGE: 6,
+    firstVisit: false,
   };
   show = "";
   componentDidMount() {
@@ -18,7 +19,7 @@ class Home extends Component {
   }
   componentDidUpdate(preProps, preState) {
     console.log(preProps.model, this.props.model);
-    if (preProps.model == true && this.props.model == false) {
+    if (preProps.model != this.props.model) {
       console.log("HIT");
       this.getData(true);
     }
@@ -90,12 +91,15 @@ class Home extends Component {
     this.props.modelOpen();
   };
   getData = async (initial) => {
-    if (!this.state.hasNextPage) return;
+    console.log(initial, "INITIAL");
+    if (!this.state.hasNextPage && !initial) return;
 
     let searchPostURL = `/posts?page=${this.state.page}&limit=${this.state.ITEMS_PER_PAGE}`;
     if (initial) {
       searchPostURL = `/posts?page=${1}&limit=${this.state.ITEMS_PER_PAGE}`;
+      this.setState({ hasNextPage: true });
     }
+    console.log(searchPostURL);
     axios
       .get(searchPostURL, {
         headers: {
@@ -107,9 +111,6 @@ class Home extends Component {
           if (total === this.state.posts.length + docs.length && !initial) {
             this.setState({ hasNextPage: false });
           }
-          if (initial) {
-            this.setState({ hasNextPage: true });
-          }
           console.log("---------POSTS-----------");
           console.log(docs);
           docs = docs.map((post) => {
@@ -117,7 +118,6 @@ class Home extends Component {
             post.commentDisabled = true;
             return post;
           });
-
           if (!initial) {
             this.setState((preState) => {
               return {
@@ -126,13 +126,14 @@ class Home extends Component {
               };
             });
           } else {
-            this.setState((preState) => {
-              return {
-                posts: [...docs],
-                page: 2,
-              };
+            console.log(initial, ")))))))))))))))))))))))))))0");
+
+            this.setState({
+              posts: [...docs],
+              page: 2,
             });
           }
+          this.setState({ firstVisit: true });
         }
       })
       .catch((e) => {
@@ -144,10 +145,33 @@ class Home extends Component {
       this.getData();
     }
   };
+  onDeleteHandler = async (postId) => {
+    if (window.confirm("Are u sure to delete?")) {
+      try {
+        await axios.delete(`/post/${postId}`, {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        });
+        this.props.addSuccess();
+        setTimeout(() => {
+          this.props.removeSuccess();
+        }, 3000);
+        this.getData(true);
+      } catch (e) {
+        console.log(e);
+        this.props.error();
+      }
+    } else {
+      console.log("NOT DELETE");
+    }
+  };
   render() {
     console.log(this.show);
     return this.props.model ? (
       <Model>{this.show}</Model>
+    ) : this.state.posts.length == 0 && this.state.firstVisit ? (
+      <h1 className="Info">Follow Others To view their posts</h1>
     ) : (
       <div>
         <div className={classes.Wrapper}>
@@ -174,6 +198,7 @@ class Home extends Component {
                 alt="Picture"
                 style={{ width: "100%" }}
               />
+
               <div className={classes.cardBottom}>
                 {post.likes.includes(this.props.user._id.toString()) ? (
                   <i
@@ -186,7 +211,16 @@ class Home extends Component {
                     class="far fa-heart"
                   ></i>
                 )}
-                <i class="far fa-comment"></i>
+                <i
+                  onClick={() => this.showMore("comments", post._id)}
+                  class="far fa-comment"
+                ></i>
+                {post.post_by._id.toString() == this.props.user._id && (
+                  <i
+                    onClick={() => this.onDeleteHandler(post._id)}
+                    class="fas fa-trash DeletePic"
+                  ></i>
+                )}
                 <p
                   onClick={() => this.showMore("likes", post._id)}
                   className={classes.ViewLikes}
@@ -196,8 +230,7 @@ class Home extends Component {
                 </p>
                 <p>
                   <b>{post.title && post.post_by.name} </b>
-                  {post.title}What is Lorem Ipsum Lorem Ipsum is simply dummy
-                  text of the printing and
+                  {post.title}
                 </p>
                 <p
                   onClick={() => this.showMore("comments", post._id)}
@@ -250,6 +283,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     modelOpen: (people) => dispatch({ type: "MODEL_OPEN", people }),
+    addSuccess: () =>
+      dispatch({ type: "SUCCESS", success: "Post deleted successfully" }),
+    removeSuccess: () => dispatch({ type: "REMOVE_SUCCESS" }),
+    error: (err) => dispatch({ type: "ERROR", error: err }),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

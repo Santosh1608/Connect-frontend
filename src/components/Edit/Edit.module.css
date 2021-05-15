@@ -33,6 +33,7 @@
   background: transparent;
   border-bottom: 1px solid #ccc;
   outline: none;
+  font-family: "Playfair Display", serif;
 }
 .Wrap button,
 label {
@@ -62,6 +63,7 @@ label {
   background-color: #cccccc;
   color: #666666;
   box-shadow: none;
+  font-family: "Playfair Display", serif;
 }
 .Wrap input:focus {
   border-bottom: 1px solid rgb(71, 187, 255);

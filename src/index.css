@@ -19,6 +19,14 @@ html {
 ::-webkit-scrollbar-thumb {
   background: #ff0000;
 }
+.DeletePic {
+  color: tomato;
+}
+.Info {
+  text-align: center;
+  margin-top: 3rem;
+  padding: 1rem;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

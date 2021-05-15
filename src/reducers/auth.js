@@ -3,6 +3,8 @@ const initialState = {
   user: JSON.parse(localStorage.getItem("user")),
   loading: false,
   error: false,
+  errorMsg: null,
+  successMsg: null,
 };
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -18,6 +20,7 @@ const authReducer = (state = initialState, action) => {
         token: action.token,
         user: action.user,
         loading: false,
+        successMsg: action.success,
       };
     case "FOLLOW":
     case "UNFOLLOW":
@@ -25,13 +28,34 @@ const authReducer = (state = initialState, action) => {
     case "UPDATE_PIC":
       localStorage.setItem("user", JSON.stringify(action.user));
       console.log(action.user);
-      return { ...state, user: action.user };
+      return {
+        ...state,
+        user: action.user,
+        loading: false,
+        successMsg: action.success,
+      };
     case "LOGOUT":
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      return { ...state, user: null, token: null };
+      return {
+        ...state,
+        user: null,
+        token: null,
+        loading: false,
+        successMsg: action.success,
+      };
     case "ERROR":
-      return { ...state, error: true, loading: false };
+      let error = null;
+      if (action.error) {
+        error = action.error.error;
+      }
+      return { ...state, error: true, loading: false, errorMsg: error };
+    case "SUCCESS":
+      return { ...state, successMsg: action.success };
+    case "REMOVE_ERROR":
+      return { ...state, error: false, errorMsg: null };
+    case "REMOVE_SUCCESS":
+      return { ...state, successMsg: null };
     default:
       return state;
   }

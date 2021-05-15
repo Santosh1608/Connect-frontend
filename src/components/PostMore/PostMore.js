@@ -19,7 +19,8 @@ class PostMore extends Component {
         comment.postDisabled = true;
         return comment;
       });
-      res.data.comments = comments;
+      res.data.comments = comments.reverse();
+      res.data.likes.reverse();
 
       this.setState({ post: res.data });
     } catch (e) {

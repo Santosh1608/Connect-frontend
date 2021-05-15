@@ -1,7 +1,6 @@
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-width: 500px;
-  min-height: 500px;
   margin: auto;
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -66,6 +65,11 @@
   border-radius: 5px;
   margin-right: 1rem;
 }
+.Info {
+  text-align: center;
+  margin-top: 3rem;
+  padding: 1rem;
+}
 .Comment button:disabled {
   cursor: not-allowed;
   background-color: #cccccc;
@@ -81,5 +85,9 @@
 @media screen and (max-width: 480px) {
   .Wrapper {
     padding-top: 0;
+  }
+  .Info {
+    font-size: 1.5rem;
+    padding: 1rem;
   }
 }

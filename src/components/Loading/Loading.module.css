@@ -1,8 +1,8 @@
 .loader,
 .loader:after {
   border-radius: 50%;
-  width: 20em;
-  height: 20em;
+  width: 10em;
+  height: 10em;
 }
 .loader {
   margin: 60px auto;
