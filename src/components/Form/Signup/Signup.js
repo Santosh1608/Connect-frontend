@@ -32,7 +32,7 @@ class SignUp extends Component {
   onChangeHandler = (e) => {
     if (e.target.name == "photo") {
       new Compressor(e.target.files[0], {
-        quality: 0.6,
+        quality: 0.8,
         maxWidth: 260,
         maxHeight: 260, // 0.6 can also be used, but its not recommended to go below.
         success: (compressedResult) => {
@@ -120,6 +120,7 @@ class SignUp extends Component {
                 name="name"
                 spellCheck={false}
                 value={this.state.name}
+                autoComplete="off"
               />
               <span
                 style={{
@@ -156,6 +157,7 @@ class SignUp extends Component {
                 name="email"
                 spellCheck={false}
                 value={this.state.email}
+                autoComplete="off"
               />
               <span
                 style={{

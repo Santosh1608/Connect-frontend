@@ -265,7 +265,7 @@ class Home extends Component {
         {this.state.hasNextPage && (
           <Waypoint onEnter={this.loadMoreData}>
             <div style={{ textAlign: "center" }}>
-              <i class="fa fa-spinner fa-2x" aria-hidden="true"></i>
+              <i class="fa fa-spinner fa-spin fa-2x" aria-hidden="true"></i>
             </div>
           </Waypoint>
         )}

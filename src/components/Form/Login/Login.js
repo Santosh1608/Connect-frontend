@@ -34,6 +34,7 @@ class Login extends Component {
                 placeholder="Email"
                 name="email"
                 spellCheck={false}
+                autoComplete="off"
                 value={this.state.email}
               />
             </div>
