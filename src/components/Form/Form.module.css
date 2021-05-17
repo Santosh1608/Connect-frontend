@@ -1,0 +1,141 @@
+.FormWrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Form div.nameError input,
+.Form div.nameError input:focus {
+  border-bottom: 2px solid red;
+}
+
+.Form div.emailError input,
+.Form div.emailError input:focus {
+  border-bottom: 2px solid red;
+}
+
+.Form div.passwordError input,
+.Form div.passwordError input:focus {
+  border-bottom: 2px solid red;
+}
+
+.Form {
+  width: 490px;
+  text-align: center;
+  padding: 3rem;
+  margin: 2rem;
+}
+.Form div p {
+  text-align: left;
+  font-size: 0.8rem;
+  line-height: 1rem;
+  color: rgba(245, 52, 52, 0.733);
+}
+.Form h1 {
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  color: #333;
+  font-size: 2rem;
+  font-weight: 500;
+}
+.Form div {
+  margin-bottom: 35px;
+  display: flex;
+}
+.Form div input {
+  flex: 1;
+}
+.Form div + div {
+  margin-bottom: 50px;
+}
+.Form button:disabled,
+.Form button:disabled:hover {
+  cursor: not-allowed;
+  background-color: #cccccc;
+  color: #666666;
+  box-shadow: none;
+}
+.Form input {
+  border: none;
+  font-size: 1rem;
+  width: 80%;
+  color: #555;
+  outline: none;
+  border-bottom: 1px solid rgb(197, 197, 197);
+  padding-bottom: 0.6rem;
+  font-weight: bold;
+  transition: all 0.5s;
+}
+.Form input:-webkit-autofill {
+  background-color: transparent !important;
+  -webkit-box-shadow: 0 0 0 50px white inset;
+}
+.Form div input:focus {
+  border-bottom: 2px solid #57b846;
+}
+.Form input::placeholder,
+.Form input[type="file"] {
+  font-weight: 100;
+  color: rgb(185, 185, 185);
+}
+.Form input::-webkit-file-upload-button {
+  background-color: #1877f2;
+  padding: 0.5rem;
+  border-radius: 5px;
+  color: #fff;
+  border: none;
+  outline: none;
+  transition: all 0.5s;
+}
+.Form button {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 25px;
+  border: none;
+  outline: none;
+  background-color: #57b846;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: all 0.5s;
+  box-shadow: 0 10px 30px 0 rgb(87 184 70 / 50%);
+}
+.Form button:hover {
+  background-color: #1877f2;
+  box-shadow: 0 10px 30px 0 rgb(0 0 150 / 30%);
+}
+.Form input::-webkit-file-upload-button:hover {
+  background-color: #3b5998;
+}
+.Form p,
+.Form button {
+  cursor: pointer;
+}
+.Form p {
+  color: rgb(185, 185, 185);
+}
+.Form p a {
+  color: #1877f2;
+}
+.Form a {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+}
+.Form a:hover {
+  font-weight: 700;
+}
+.Warning {
+  text-align: left;
+  color: red !important;
+  margin-bottom: 1rem;
+}
+.Warning::before {
+  content: "*";
+}
+
+@media screen and (max-width: 500px) {
+  .Form {
+    padding: 0.5rem;
+  }
+}

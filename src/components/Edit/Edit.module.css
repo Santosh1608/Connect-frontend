@@ -1,0 +1,101 @@
+.Wrap {
+  display: flex;
+  max-width: 700px;
+  margin: auto;
+  margin-top: 3rem;
+  background: #fff;
+  padding: 2rem 1rem;
+}
+.Wrap img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: block;
+}
+.Wrap .Left div {
+  text-align: center;
+}
+.Left {
+  padding-left: 1rem;
+}
+
+.Right {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+  flex-wrap: wrap;
+}
+.Right input {
+  padding: 1rem 0;
+  border: none;
+  padding-bottom: 5px;
+  background: transparent;
+  border-bottom: 1px solid #ccc;
+  outline: none;
+  font-family: "Playfair Display", serif;
+}
+.Wrap button,
+label {
+  padding: 0.5rem;
+  color: white;
+  background: tomato;
+  border: none;
+  border-radius: 5px;
+  margin-top: 1rem;
+  outline: none;
+}
+.Wrap button:hover,
+label:hover {
+  background-color: #1877f2;
+  box-shadow: 0 1px 10px 0 rgb(0 0 150 / 30%);
+}
+input[type="file"] {
+  color: transparent;
+}
+label {
+  display: inline-block;
+  margin-top: 1rem;
+}
+.Wrap button:disabled,
+.Wrap button:disabled:hover {
+  cursor: not-allowed;
+  background-color: #cccccc;
+  color: #666666;
+  box-shadow: none;
+  font-family: "Playfair Display", serif;
+}
+.Wrap input:focus {
+  border-bottom: 1px solid rgb(71, 187, 255);
+}
+@media screen and (max-width: 800px) {
+  .Left img {
+    width: 140px;
+    height: 140px;
+  }
+  .Wrap {
+    max-width: 460px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .Left img {
+    width: 100px;
+    height: 100px;
+  }
+  .Wrap {
+    max-width: 400px;
+  }
+}
+@media screen and (max-width: 300px) {
+  .Left img {
+    width: 80px;
+    height: 80px;
+  }
+  .Wrap {
+    flex-direction: column;
+    align-items: center;
+  }
+  .Right {
+    justify-content: center;
+  }
+}

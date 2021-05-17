@@ -1,0 +1,141 @@
+.UserProfile {
+  display: flex;
+  padding: 2rem;
+}
+.UserProfile .Left {
+  flex: 4;
+}
+.UserProfile h1 {
+  margin-bottom: 1rem;
+  word-break: break-all;
+}
+.UserProfile h1 + p {
+  word-break: break-all;
+}
+.UserProfile .Right {
+  flex: 8;
+}
+.UserProfile i {
+  font-size: 1.5rem;
+}
+.UserProfile img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.UserProfile .Icons {
+  display: flex;
+}
+.UserProfile .Icons div {
+  margin-right: 1rem;
+}
+.UserProfile .Icons i {
+  margin-right: 5px;
+}
+.UserProfile .Icons div span {
+  display: inline-block;
+  padding: 0.6rem;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.UserProfile .Icons div span.Follow {
+  background: rgb(143, 173, 109);
+}
+.UserProfile .Icons div span.UnFollow {
+  background: rgba(250, 111, 111, 0.918);
+}
+.UserProfile {
+  border-bottom: 1px solid rgb(207, 207, 207);
+}
+.UserProfile .UserData {
+  display: flex;
+  margin-top: 1rem;
+}
+.UserProfile .UserData p {
+  margin-right: 1rem;
+  background: rgb(124, 216, 219);
+  padding: 5px;
+  font-weight: bold;
+  color: white;
+}
+.UserProfile .UserData p:first-child {
+  background: none;
+  color: black;
+  padding: 5px;
+}
+.UserData span {
+  margin-right: 5px;
+}
+.UserDataMobile {
+  display: none;
+}
+.UserPosts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.UserPosts div img {
+  width: 100%;
+  height: 100%;
+}
+.Show {
+  color: rgb(73, 73, 73);
+  text-align: center;
+  margin-top: 2rem;
+}
+
+@media screen and (max-width: 800px) {
+  .UserProfile .UserData {
+    display: none;
+  }
+  .UserProfile .Left {
+    flex: 6;
+  }
+  .UserDataMobile {
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgb(189, 187, 187);
+  }
+  .UserDataMobile span {
+    margin-right: 5px;
+    font-weight: bolder;
+  }
+  .UserProfile img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+  }
+}
+@media screen and (max-width: 650px) {
+  .UserProfile .Left {
+    flex: 6;
+  }
+  .UserProfile img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+  }
+
+  .UserProfile .Icons i {
+    font-size: 1.4rem;
+  }
+}
+@media screen and (max-width: 480px) {
+  .UserProfile img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  .UserProfile .Left {
+    padding-right: 2rem;
+  }
+  .UserProfile .Icons i {
+    font-size: 1rem;
+  }
+  .UserProfile h1 {
+    font-size: 1.4rem;
+    margin-bottom: 0;
+  }
+}
